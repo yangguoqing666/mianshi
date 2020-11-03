@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+	<meta charset="utf-8" />
+	<title>下拉刷新例子</title>
+	<link href="http://www.itxst.com/package/minirefresh2/minirefresh.css" rel="stylesheet" />
+	<script src="http://www.itxst.com/package/minirefresh2/minirefresh.js"></script>
+	<script src="http://www.itxst.com/js/jquery.js"></script>
+	<style>
+		.list {
+			width: 80%;
+			margin-top: 10px;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: #f1f1f1;
+			border: solid 1px #ddd;
+			border-radius: 3px;
+		}
+
+		.aa {
+			height: 200px;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="mrefresh" class="minirefresh-wrap">
+
+		<div class="minirefresh-scroll">
+			<div class="aa">
+				<li>网站内容11222222111</li>
+				<li>网站内容11111</li>
+				<li>网站内容1111222222221</li>
+				<li>网站内容11111</li>
+				<li>网站内容1112222222211</li>
+				<li>网站内容11111</li>
+			</div>
+			<!-- 这里放你要被下拉的区域 -->
+			<div class="list">
+				<ul>
+					<li>网站www.itxst.com</li>
+					<li>网站www.github.com</li>
+					<li>网站内容11111</li>
+					<li>网站内容11111</li>
+					<li>网站内容11111</li>
+					<li>网站内容11111</li>
+					<li>网站内容11111</li>
+					<li>网站内容11111</li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		var mRefresh = new MiniRefresh({
+			container: '#mrefresh', //这里是插件的容器ID
+			down: {
+				callback: function () {
+					// 下拉后的回调事件 ，你可以在这里执行你的后台请求数据函数，达到刷新数据的作用
+					getData();
+
+
+					mRefresh.endDownLoading();
+				}
+				,
+				// onCalcel: function () {
+				// 	//下拉到一半，放弃刷新执行的事件
+				// 	//calcelMsg();
+				// }
+			}
+			,
+			up: {
+
+
+				callback: function () {
+					// 向上拉后的回调事件
+
+
+					mRefresh.endUpLoading(true);
+				}
+			}
+		});
+		var pos = 0;
+		function getData() {
+			$(".list ul li").remove();
+
+			for (var i = pos; i < pos + 10; i++) {
+				$(".list ul").append("<li>新数据" + i + "</li>");
+
+			}
+			pos = pos + 10;
+		}
+
+
+		function calcelMsg() {
+			$(".list ul li").remove();
+			$(".list ul").append("<li>你放弃了刷新</li>");
+		}
+
+
+		// function rTime(date) {
+		// 	var json_date = new Date(date).toJSON();
+		// 	return new Date(new Date(json_date) + 8 * 3600 * 1000).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+		// }
+		// rTime('2019-12-31T03:01:31.000Z');
+		let time,yue,shi,ri,times;
+		let str = '2019-12-31 03:01:31';
+		yue =  str.split('-')
+		shi = str.split(' ')[1].split(':');
+		ri = shi[0]+':'+shi[1];
+		time =yue[1]+'月'+yue[1]+'日';
+		times = time + '   '+ ri; 
+	</script>
+</body>
+
+</html>
